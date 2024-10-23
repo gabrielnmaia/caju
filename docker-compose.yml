@@ -1,0 +1,21 @@
+services:
+  server:
+    container_name: caju
+    build: ./
+    restart: always
+    ports:
+      - 4001:4001
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+
+  db:
+    container_name: caju-db
+    image: postgres:12-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./scripts:/docker-entrypoint-initdb.d/
+    env_file:
+      - ./.env
